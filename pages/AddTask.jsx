@@ -1,8 +1,84 @@
+import { useState, useRef } from "react"
+
 export default function AddTask() {
+
+    const symbols = "!@#$%^&*()-_=+[]{}|;:'\\,.<>?/`~";
+
+    const [title, setTitle] = useState("")
+    const [errorMess, setErrorMess] = useState("")
+
+    const validaTitle = title.trim() === "" || [...title.trim()].some((t) => symbols.includes(t))
+
+    const descriptionRef = useRef()
+    const statusRef = useRef()
+
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        const descriptionValue = descriptionRef.current.value
+        const statusValue = statusRef.current.value
+
+        if (validaTitle) {
+            setErrorMess("Il titolo non puo contenere caratteri speciali o essere vuoto")
+            return
+        }
+
+        setErrorMess("")
+
+        // oggetto task nuova
+        const newTask = {
+            title: title,
+            description: descriptionValue,
+            status: statusValue
+        };
+
+        console.log("Task creata con successo:", newTask)
+    }
 
     return (
         <>
-            <h1>AddTask</h1>
+            <main>
+                <h3>Aggiungi task</h3>
+                <form onSubmit={handleSubmit}>
+
+                    {/* Nome */}
+                    <section className="section_add_task">
+                        <label>Nome</label>
+                        <input
+                            type="text"
+                            placeholder="Inserisci il titolo della task"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        {errorMess && <p style={{ color: "red" }}>{errorMess}</p>}
+                    </section>
+
+                    {/* descrizione */}
+                    <section className="section_add_task">
+                        <label>Descrizione</label>
+                        <textarea
+                            placeholder="Inserisci descrizione"
+                            ref={descriptionRef}
+                            defaultValue="">
+
+                        </textarea>
+                    </section>
+
+                    {/* stato */}
+                    <section className="section_add_task">
+                        <label>Stato</label>
+                        <select ref={statusRef}
+                            defaultValue="To do">
+
+                            <option value="To do">To do</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </section>
+
+                    <button className="mt-4 px-2" type="submit">Aggiungi task</button>
+                </form>
+            </main>
         </>
     )
 }

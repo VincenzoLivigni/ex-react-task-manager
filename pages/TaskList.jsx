@@ -7,25 +7,26 @@ export default function TaskList() {
     const { tasks } = useContext(GlobalContext)
     return (
         <>
-            <h1>TaskList</h1>
+            <main>
+                <h3>TaskList</h3>
+                <table className="bg-white">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Stato</th>
+                            <th>Data di Creazione</th>
+                        </tr>
+                    </thead>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Stato</th>
-                        <th>Data di Creazione</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {
-                        tasks.map((task) => (
-                            <TaskRow key={task.id} task={task} />
-                        ))
-                    }
-                </tbody>
-            </table>
+                    <tbody>
+                        {
+                            tasks.map((task) => (
+                                <TaskRow key={task.id} task={task} />
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </main>
         </>
     )
 }

@@ -4,7 +4,7 @@ export default function Header() {
 
     return (
         <nav className="navbar-nav">
-            <ul className="list-unstyled d-flex justify-content-center gap-3 py-1">
+            <ul className="list-unstyled d-flex justify-content-center gap-3 py-1 m-0">
                 <li className="nav-item">
                     <NavLink className="nav-link" to={"/"}>
                         Home

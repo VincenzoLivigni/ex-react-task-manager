@@ -6,7 +6,7 @@ function TaskRow({ task }) {
     return (
         <tr>
             <td>
-                <Link to={`/task/${task.id}`}>{task.title}</Link>
+                <Link className="link" to={`/task/${task.id}`}>{task.title}</Link>
             </td>
 
             <td style={{

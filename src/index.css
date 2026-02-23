@@ -7,7 +7,7 @@
 
 /* navbar */
 .navbar-nav {
-    background-color: rgb(239, 246, 252);
+    background-color: rgb(239, 239, 239);
 
     li:hover {
         font-weight: 600;
@@ -16,9 +16,7 @@
 
 /* main */
 main {
-    background-color: rgb(239, 246, 252);
-    height: calc(87vh);
-    padding: 0 5rem;
+    padding: 1rem 5rem;
 
     h3 {
         margin-bottom: 1.25rem;
@@ -31,6 +29,15 @@ th,
 td {
     border: 2px solid black;
     padding: 0.5rem;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
 
 /* addTask */
@@ -47,5 +54,20 @@ td {
     textarea {
         min-width: 200px;
         padding-left: 0.25rem;
+    }
+}
+
+/* task detail */
+.modal {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+
+    h4 {
+        color: red;
     }
 }

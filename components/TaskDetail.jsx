@@ -1,11 +1,14 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { GlobalContext } from "../contexts/GlobalContext"
 import { useParams, useNavigate } from "react-router-dom"
+import Modal from "./Modal"
 
 export default function TaskDetail() {
     const { tasks, removeTask } = useContext(GlobalContext)
     const { id } = useParams()
     const navigate = useNavigate()
+    const [show, setShow] = useState(false)
+    console.log("show modal:", show)
 
     const task = tasks.find((t) => t.id.toString() === id)
 
@@ -23,19 +26,29 @@ export default function TaskDetail() {
     }
     return (
         <>
-            <h1>taskdetail</h1>
+            <main>
+                {task && (
+                    <>
+                        <div>
+                            <h3>{task.title}</h3>
+                            <p><strong>Descrizione: </strong>{task.description}</p>
+                            <p><strong>Status: </strong>{task.status}</p>
+                            <p><strong>Data di creazione: </strong>{task.createdAt}</p>
 
-            {task && (
-                <div>
-                    <p><strong>Titolo: </strong>{task.title}</p>
-                    <p><strong>Descrizione: </strong>{task.description}</p>
-                    <p><strong>Status: </strong>{task.status}</p>
-                    <p><strong>Data di creazione: </strong>{task.createdAt}</p>
-
-                    <button onClick={deleteTask}>Elimina task</button>
-                </div>
-            )
-            }
+                            <button className="px-3" onClick={() => setShow(true)}>Elimina task</button>
+                        </div>
+                        <Modal
+                            title="Sicuro di voler rimuovere la task?"
+                            content={task.title}
+                            show={show}
+                            onClose={() => setShow(false)}
+                            onConfirm={deleteTask}
+                            confirmText={"Conferma"}
+                        />
+                    </>
+                )
+                }
+            </main>
         </>
     )
 }

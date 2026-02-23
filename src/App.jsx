@@ -3,6 +3,7 @@ import TaskList from "../pages/TaskList"
 import AddTask from "../pages/AddTask"
 import DefaultLayout from "../layouts/DefaultLayout"
 import GlobalProvider from "../contexts/GlobalContext"
+import TaskDetail from "../components/TaskDetail"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route element={<DefaultLayout />}>
               <Route path="/" element={<TaskList />} />
+              <Route path="/task/:id" element={<TaskDetail />} />
               <Route path="/addTask" element={<AddTask />} />
             </Route>
           </Routes>

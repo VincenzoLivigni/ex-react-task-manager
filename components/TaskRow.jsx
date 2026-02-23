@@ -1,10 +1,13 @@
 import { memo } from "react"
+import { Link } from "react-router-dom"
 
 function TaskRow({ task }) {
 
     return (
         <tr>
-            <td>{task.title}</td>
+            <td>
+                <Link to={`/task/${task.id}`}>{task.title}</Link>
+            </td>
 
             <td style={{
                 backgroundColor:
@@ -15,7 +18,7 @@ function TaskRow({ task }) {
             >{task.status}</td>
 
             <td>{task.createdAt}</td>
-        </tr>
+        </tr >
     )
 }
 

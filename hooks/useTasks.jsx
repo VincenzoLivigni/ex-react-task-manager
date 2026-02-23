@@ -16,8 +16,26 @@ export default function useTasks() {
             .catch(err => console.log("Errore durante ricezione dei dati", err))
     }, [])
 
-    function addTask() {
+    async function addTask({ title, description, status }) {
+        try {
+            const res = await fetch(`${API_URL}/tasks`, {
+                method: "POST",
+                body: JSON.stringify({ title, description, status }),
+                headers: { "Content-Type": "application/json" }
+            })
 
+            const data = await res.json()
+
+            if (!data.success) {
+                throw new Error(data.message)
+            }
+            setTasks(prev => [...prev, data.task])
+            return data.task
+        }
+        catch (err) {
+            console.log("Creazione della task fallita", err.message)
+            throw err
+        }
     }
 
     function removeTask() {

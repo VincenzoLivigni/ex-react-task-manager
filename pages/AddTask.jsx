@@ -1,4 +1,5 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useContext } from "react"
+import { GlobalContext } from "../contexts/GlobalContext"
 
 export default function AddTask() {
 
@@ -12,7 +13,9 @@ export default function AddTask() {
     const descriptionRef = useRef()
     const statusRef = useRef()
 
-    function handleSubmit(e) {
+    const { addTask } = useContext(GlobalContext)
+
+    async function handleSubmit(e) {
         e.preventDefault()
 
         const descriptionValue = descriptionRef.current.value
@@ -25,14 +28,23 @@ export default function AddTask() {
 
         setErrorMess("")
 
-        // oggetto task nuova
-        const newTask = {
-            title: title,
-            description: descriptionValue,
-            status: statusValue
-        };
+        try {
+            await addTask({
+                title: title,
+                description: descriptionValue,
+                status: statusValue
+            })
 
-        console.log("Task creata con successo:", newTask)
+            alert("Task creata con successo")
+
+            setTitle("")
+            descriptionRef.current.value = ""
+            statusRef.current.value = "To do"
+        }
+        catch (err) {
+            console.log(err)
+            alert(`Creazione della task fallita, ${err.message}`)
+        }
     }
 
     return (

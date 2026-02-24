@@ -59,15 +59,43 @@ td {
 
 /* task detail */
 .modal {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-top: 5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: fixed;
     z-index: 9;
 
-    h4 {
+    h3 {
         color: red;
+        text-align: center
+    }
+
+    h4 {
+        color: rgb(252, 100, 100);
+    }
+}
+
+/* modale di modifica */
+.section_modifica_modale {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+
+    label {
+        text-align: start;
+    }
+
+    input,
+    select {
+        height: 1.75rem;
+        font-size: 1rem;
+    }
+
+    textarea {
+        font-size: 1rem;
+        min-height: 100px;
     }
 }

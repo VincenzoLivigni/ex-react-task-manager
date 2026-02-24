@@ -40,6 +40,11 @@ td {
     text-decoration: underline;
 }
 
+.evidenziaOrdine:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* addTask */
 .section_add_task {
     margin-bottom: 1.5rem;

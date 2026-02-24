@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { GlobalContext } from "../contexts/GlobalContext"
 import TaskRow from "../components/TaskRow"
 
@@ -9,6 +9,9 @@ export default function TaskList() {
     const [sortBy, setSortBy] = useState("createdAt")
     const [sortOrder, setSortOrder] = useState(1)
 
+    const [searchQuery, setSearchQuery] = useState("")
+    const [queryDebounced, setQueryDebounced] = useState("")
+
     function order(column) {
         if (sortBy === column) {
             setSortOrder(prev => prev * -1)
@@ -18,14 +21,27 @@ export default function TaskList() {
         }
     }
 
+    useEffect(() => {
+        const ritardoAggiornamentoQuery = setTimeout(() => {
+            setQueryDebounced(searchQuery)
+        }, 1000)
+
+        return () => clearTimeout(ritardoAggiornamentoQuery)
+    }, [searchQuery])
+
     const orderedTasks = useMemo(() => {
+
+        const query = queryDebounced.toLowerCase()
+
+        const filteredTasks = tasks.filter((t) => t.title.toLowerCase().includes(query))
+
         const statusOrder = {
             "To do": 0,
             "Doing": 1,
             "Done": 2
         }
 
-        return [...tasks].sort((a, b) => {
+        return [...filteredTasks].sort((a, b) => {
             if (sortBy === "title") {
                 return a.title.localeCompare(b.title) * sortOrder
             }
@@ -41,13 +57,22 @@ export default function TaskList() {
             return 0
         })
 
-    }, [tasks, sortBy, sortOrder])
+    }, [tasks, sortBy, sortOrder, queryDebounced])
 
     return (
         <>
             <main>
-                <h3>TaskList</h3>
-                <table className="bg-white">
+                <h3>Lista task</h3>
+
+                <input
+                    className="mb-3"
+                    type="text"
+                    placeholder="Cerca..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+
+                <table>
                     <thead>
                         <tr>
                             <th className="evidenziaOrdine" onClick={() => order("title")}>Nome</th>
